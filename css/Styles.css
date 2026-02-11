@@ -19,7 +19,8 @@
 
 h1{
   font-family: var(--title-font);
-  font-weight: normal; 
+  font-weight: 500;
+  font-size: 20;
   letter-spacing: 3px;
   text-transform: uppercase; 
 }
@@ -29,7 +30,6 @@ h2, h3, h4 {
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
-
 
 
 body {
@@ -42,6 +42,7 @@ body {
 /* ---------- HERO ---------- */
 .hero {
   min-height: 100vh;
+  font-weight: 400;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -190,10 +191,12 @@ footer {
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2.3rem;
+  .hero-title {
+    font-size: 3rem;
+    letter-spacing: 2px;
   }
 }
+
 /* ---------- SERVICIOS CON IMAGEN HOVER ---------- */
 .service-card {
   position: relative;
@@ -374,7 +377,7 @@ footer {
 .value-main {
   font-family: var(--title-font);
   font-size: 2.2rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 1.2px;
   line-height: 1.25;
   margin-bottom: 25px;
@@ -413,7 +416,4 @@ footer {
     font-size: 1.6rem;
   }
 }
-
-
-
 
