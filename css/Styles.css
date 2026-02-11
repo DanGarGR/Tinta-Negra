@@ -6,6 +6,7 @@
   --text-light: #ffffff;
   --text-muted: #cccccc;
   --accent: #eaeaea;
+  --title-font: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI', sans-serif;
 }
 
 * {
@@ -22,6 +23,7 @@ body {
 }
 
 /* ---------- HERO ---------- */
+
 .hero {
   min-height: 100vh;
   display: flex;
@@ -404,3 +406,4 @@ footer {
     font-size: 1.6rem;
   }
 }
+
