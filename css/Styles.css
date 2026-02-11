@@ -6,19 +6,30 @@
   --text-light: #ffffff;
   --text-muted: #cccccc;
   --accent: #eaeaea;
-  --title-font: 'Bahnschrift SemiBold', 'Bahnschrift', 'Segoe UI', sans-serif;
+
+  --title-font: 'Haettenschweiler', 'Impact', 'Arial Black', sans-serif;
 }
+
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-h1, h2, h3, h4 {
+
+h1{
   font-family: var(--title-font);
-  font-weight: 600;
-  letter-spacing: 1px;
+  font-weight: normal; 
+  letter-spacing: 3px;
+  text-transform: uppercase; 
 }
+h2, h3, h4 {
+  font-family: var(--title-font);
+  font-weight: normal; 
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
 
 
 body {
@@ -402,5 +413,7 @@ footer {
     font-size: 1.6rem;
   }
 }
+
+
 
 
