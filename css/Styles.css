@@ -21,7 +21,7 @@ h1{
   font-family: var(--title-font);
   font-weight: 500;
   font-size: 20;
-  letter-spacing: 3px;
+  letter-spacing: 1.5px;
   text-transform: uppercase; 
 }
 h2, h3, h4 {
@@ -416,4 +416,5 @@ footer {
     font-size: 1.6rem;
   }
 }
+
 
