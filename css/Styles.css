@@ -417,4 +417,15 @@ footer {
   }
 }
 
+#messages{
+  margin-top:40px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+#messages .card{
+  padding:20px;
+  border:1px solid #ffffff22;
+}
 
