@@ -24,7 +24,7 @@ import {
 /* ================= CONFIGURACIÓN FIREBASE ================= */
 
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
+  apiKey: "AIzaSyCLlLytKDFF5I1BUugmJM4gC3LTh-9RFl8",
   authDomain: "tinta--web.firebaseapp.com",
   projectId: "tinta--web",
   storageBucket: "tinta--web.firebasestorage.app",
