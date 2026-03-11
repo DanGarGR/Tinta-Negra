@@ -113,3 +113,27 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
  }
 
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const loginBtn = document.getElementById("loginBtn");
+
+  loginBtn.addEventListener("click", async () => {
+
+    const email = document.getElementById("adminEmail").value;
+    const pass = document.getElementById("adminPass").value;
+
+    try{
+
+      await signInWithEmailAndPassword(auth, email, pass);
+      alert("Sesión iniciada");
+
+      cargarMensajesAdmin();
+
+    }catch(error){
+      alert("Error: " + error.message);
+    }
+
+  });
+
+});
