@@ -27,7 +27,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCLlLytKDFF5I1BUugmJM4gC3LTh-9RFl8",
   authDomain: "tinta--web.firebaseapp.com",
   projectId: "tinta--web",
-  storageBucket: "tinta--web.firebasestorage.app",
+  storageBucket: "tinta--web.appspot.com",
   messagingSenderId: "1062418690137",
   appId: "1:1062418690137:web:d63c596f1aa9c6180e0148"
 };
