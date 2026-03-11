@@ -1,17 +1,5 @@
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  orderBy,
-  where,
-  updateDoc,
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+/* ================= ANIMACIONES AL HACER SCROLL ================= */
 
-/* ---------- ANIMACIONES AL HACER SCROLL ---------- */
 const sections = document.querySelectorAll(".section");
 
 const observer = new IntersectionObserver(
@@ -27,78 +15,41 @@ const observer = new IntersectionObserver(
 
 sections.forEach(section => observer.observe(section));
 
-/* ---------- FORMULARIO (SIMULACIÓN DE BD) ---------- */
-const form = document.getElementById("contactForm");
 
-const message = document.createElement("div");
-message.classList.add("form-message");
-form.appendChild(message);
+/* ================= FORMULARIO DE CONTACTO (SIMULACIÓN) ================= */
 
-form.addEventListener("submit", e => {
-  e.preventDefault();
+const contactForm = document.getElementById("contactForm");
 
-  const fakeDB = {
-    nombre: form.querySelector("input[type='text']").value,
-    correo: form.querySelector("input[type='email']").value,
-    mensaje: form.querySelector("textarea").value,
-    fecha: new Date().toLocaleString()
-  };
+if (contactForm) {
 
-  console.log("Registro guardado (simulado):", fakeDB);
+  const message = document.createElement("div");
+  message.classList.add("form-message");
 
-  message.textContent = "✔ Registro enviado correctamente. Gracias por escribir.";
-  message.classList.add("show");
+  contactForm.appendChild(message);
 
-  form.reset();
+  contactForm.addEventListener("submit", e => {
 
-  setTimeout(() => {
-    message.classList.remove("show");
-  }, 4000);
-});
-import {
- updateDoc,
- deleteDoc,
- doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    e.preventDefault();
 
- const snapshot = await getDocs(collection(db,"mensajes"));
+    const fakeDB = {
+      nombre: contactForm.querySelector("input[type='text']").value,
+      correo: contactForm.querySelector("input[type='email']").value,
+      mensaje: contactForm.querySelector("textarea").value,
+      fecha: new Date().toLocaleString()
+    };
 
- snapshot.forEach((d)=>{
+    console.log("Registro guardado (simulado):", fakeDB);
 
-   const data = d.data();
+    message.textContent = "✔ Registro enviado correctamente. Gracias por escribir.";
+    message.classList.add("show");
 
-   const card = document.createElement("div");
+    contactForm.reset();
 
-   card.innerHTML = `
-     <h3>${data.nombre}</h3>
-     <p>${data.mensaje}</p>
+    setTimeout(() => {
+      message.classList.remove("show");
+    }, 4000);
 
-     <button onclick="aprobar('${d.id}')">Aprobar</button>
-     <button onclick="eliminar('${d.id}')">Eliminar</button>
-   `;
+  });
 
-   container.appendChild(card);
-
- });
-
-}
-
-
-window.aprobar = async function(id){
-
- const ref = doc(db,"mensajes",id);
-
- await updateDoc(ref,{
-   aprobado:true
- });
-
- cargarMensajesAdmin();
-}
-
-window.eliminar = async function(id){
-
- await deleteDoc(doc(db,"mensajes",id));
-
- cargarMensajesAdmin();
 }
 
