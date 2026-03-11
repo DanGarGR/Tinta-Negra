@@ -42,3 +42,55 @@ form.addEventListener("submit", e => {
     message.classList.remove("show");
   }, 4000);
 });
+import {
+ updateDoc,
+ deleteDoc,
+ doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+async function cargarMensajesAdmin(){
+
+ const container = document.getElementById("adminMessages");
+
+ container.innerHTML="";
+
+ const snapshot = await getDocs(collection(db,"mensajes"));
+
+ snapshot.forEach((d)=>{
+
+   const data = d.data();
+
+   const card = document.createElement("div");
+
+   card.innerHTML = `
+     <h3>${data.nombre}</h3>
+     <p>${data.mensaje}</p>
+
+     <button onclick="aprobar('${d.id}')">Aprobar</button>
+     <button onclick="eliminar('${d.id}')">Eliminar</button>
+   `;
+
+   container.appendChild(card);
+
+ });
+
+}
+
+
+window.aprobar = async function(id){
+
+ const ref = doc(db,"mensajes",id);
+
+ await updateDoc(ref,{
+   aprobado:true
+ });
+
+ cargarMensajesAdmin();
+}
+
+window.eliminar = async function(id){
+
+ await deleteDoc(doc(db,"mensajes",id));
+
+ cargarMensajesAdmin();
+}
