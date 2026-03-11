@@ -95,25 +95,6 @@ import {
 
 const auth = getAuth();
 
-document.getElementById("loginBtn").addEventListener("click", async () => {
-
- const email = document.getElementById("adminEmail").value;
- const pass = document.getElementById("adminPass").value;
-
- try {
-
-   await signInWithEmailAndPassword(auth, email, pass);
-
-   cargarMensajesAdmin();
-
- } catch(error){
-
-   alert("Error al iniciar sesión");
-
- }
-
-});
-
 document.addEventListener("DOMContentLoaded", () => {
 
   const loginBtn = document.getElementById("loginBtn");
