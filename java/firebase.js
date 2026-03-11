@@ -25,7 +25,7 @@ const db = getFirestore(app);
 
 /* ---------- ENVIAR MENSAJE ---------- */
 
-const form = document.getElementById("communityForm");
+const form = document.getElementById("contactForm");
 
 form.addEventListener("submit", async (e) => {
 
