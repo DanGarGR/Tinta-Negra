@@ -1,3 +1,5 @@
+/* ================= FIREBASE IMPORTS ================= */
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -6,12 +8,23 @@ import {
   addDoc,
   getDocs,
   query,
-  orderBy
+  orderBy,
+  where,
+  updateDoc,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+/* ================= CONFIGURACIÓN FIREBASE ================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCLlLytKDFF5I1BUugmJM4gC3LTh-9RFl8",
+  apiKey: "TU_API_KEY",
   authDomain: "tinta--web.firebaseapp.com",
   projectId: "tinta--web",
   storageBucket: "tinta--web.firebasestorage.app",
@@ -21,13 +34,16 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 
-/* ---------- ENVIAR MENSAJE ---------- */
+/* ================= PUBLICAR MENSAJES ================= */
 
-const form = document.getElementById("contactForm");
+const communityForm = document.getElementById("communityForm");
 
-form.addEventListener("submit", async (e) => {
+if (communityForm) {
+
+communityForm.addEventListener("submit", async (e) => {
 
   e.preventDefault();
 
@@ -35,86 +51,150 @@ form.addEventListener("submit", async (e) => {
   const mensaje = document.getElementById("userMessage").value;
 
   await addDoc(collection(db, "mensajes"), {
-  nombre: nombre,
-  mensaje: mensaje,
-  fecha: new Date(),
-  aprobado: false
-});
-
-  form.reset();
-
-  cargarMensajes();
-});
-
-
-/* ---------- MOSTRAR MENSAJES ---------- */
-
-async function cargarMensajes() {
-
-  const container = document.getElementById("messages");
-
-  container.innerHTML = "";
-
-  import { where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const q = query(
-  collection(db, "mensajes"),
-  where("aprobado", "==", true),
-  orderBy("fecha", "desc")
-);
-
-  const querySnapshot = await getDocs(q);
-
-  querySnapshot.forEach((doc) => {
-
-    const data = doc.data();
-
-    const card = document.createElement("div");
-
-    card.classList.add("card");
-
-    card.innerHTML = `
-      <h3>${data.nombre}</h3>
-      <p>${data.mensaje}</p>
-    `;
-
-    container.appendChild(card);
-
+    nombre: nombre,
+    mensaje: mensaje,
+    fecha: new Date(),
+    aprobado: false
   });
+
+  communityForm.reset();
+
+  alert("Mensaje enviado. Esperando aprobación.");
+
+});
 
 }
 
 
+/* ================= MOSTRAR MENSAJES APROBADOS ================= */
+
+async function cargarMensajes() {
+
+const container = document.getElementById("messages");
+
+if(!container) return;
+
+container.innerHTML = "";
+
+const q = query(
+  collection(db,"mensajes"),
+  where("aprobado","==",true),
+  orderBy("fecha","desc")
+);
+
+const snapshot = await getDocs(q);
+
+snapshot.forEach((d)=>{
+
+  const data = d.data();
+
+  const card = document.createElement("div");
+
+  card.classList.add("card");
+
+  card.innerHTML = `
+    <h3>${data.nombre}</h3>
+    <p>${data.mensaje}</p>
+  `;
+
+  container.appendChild(card);
+
+});
+
+}
+
 cargarMensajes();
 
 
-import {
- getAuth,
- signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+/* ================= LOGIN ADMIN ================= */
 
-const auth = getAuth();
+document.addEventListener("DOMContentLoaded",()=>{
 
-document.addEventListener("DOMContentLoaded", () => {
+const loginBtn = document.getElementById("loginBtn");
 
-  const loginBtn = document.getElementById("loginBtn");
+if(!loginBtn) return;
 
-  loginBtn.addEventListener("click", async () => {
+loginBtn.addEventListener("click",async ()=>{
 
-    const email = document.getElementById("adminEmail").value;
-    const pass = document.getElementById("adminPass").value;
+const email = document.getElementById("adminEmail").value;
+const pass = document.getElementById("adminPass").value;
 
-    try{
+try{
 
-      await signInWithEmailAndPassword(auth, email, pass);
-      alert("Sesión iniciada");
+await signInWithEmailAndPassword(auth,email,pass);
 
-      cargarMensajesAdmin();
+alert("Administrador conectado");
 
-    }catch(error){
-      alert("Error: " + error.message);
-    }
+cargarMensajesAdmin();
 
-  });
+}catch(error){
+
+alert("Error: "+error.message);
+
+}
 
 });
+
+});
+
+
+/* ================= PANEL ADMIN ================= */
+
+async function cargarMensajesAdmin(){
+
+const container = document.getElementById("adminMessages");
+
+if(!container) return;
+
+container.innerHTML="";
+
+const snapshot = await getDocs(collection(db,"mensajes"));
+
+snapshot.forEach((d)=>{
+
+const data = d.data();
+
+const card = document.createElement("div");
+
+card.classList.add("card");
+
+card.innerHTML=`
+
+<h3>${data.nombre}</h3>
+<p>${data.mensaje}</p>
+
+<button onclick="aprobar('${d.id}')">Aprobar</button>
+<button onclick="eliminar('${d.id}')">Eliminar</button>
+
+`;
+
+container.appendChild(card);
+
+});
+
+}
+
+
+/* ================= MODERAR MENSAJES ================= */
+
+window.aprobar = async function(id){
+
+const ref = doc(db,"mensajes",id);
+
+await updateDoc(ref,{
+  aprobado:true
+});
+
+cargarMensajesAdmin();
+cargarMensajes();
+
+}
+
+
+window.eliminar = async function(id){
+
+await deleteDoc(doc(db,"mensajes",id));
+
+cargarMensajesAdmin();
+
+}
