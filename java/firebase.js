@@ -35,10 +35,11 @@ form.addEventListener("submit", async (e) => {
   const mensaje = document.getElementById("userMessage").value;
 
   await addDoc(collection(db, "mensajes"), {
-    nombre: nombre,
-    mensaje: mensaje,
-    fecha: new Date()
-  });
+  nombre: nombre,
+  mensaje: mensaje,
+  fecha: new Date(),
+  aprobado: false
+});
 
   form.reset();
 
@@ -54,7 +55,13 @@ async function cargarMensajes() {
 
   container.innerHTML = "";
 
-  const q = query(collection(db, "mensajes"), orderBy("fecha", "desc"));
+  import { where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const q = query(
+  collection(db, "mensajes"),
+  where("aprobado", "==", true),
+  orderBy("fecha", "desc")
+);
 
   const querySnapshot = await getDocs(q);
 
