@@ -81,8 +81,8 @@ h2,h3,h4{
   margin:auto;
   padding:80px 20px;
 
-  opacity:0;
-  transform:translateY(40px);
+  opacity:1;
+  transform:none;
 
   transition:all .8s ease;
 }
@@ -501,5 +501,6 @@ button:hover{
   }
 
 }
+
 
 
