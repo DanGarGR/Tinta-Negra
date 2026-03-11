@@ -1,3 +1,16 @@
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  updateDoc,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 /* ---------- ANIMACIONES AL HACER SCROLL ---------- */
 const sections = document.querySelectorAll(".section");
 
@@ -48,12 +61,6 @@ import {
  doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-async function cargarMensajesAdmin(){
-
- const container = document.getElementById("adminMessages");
-
- container.innerHTML="";
-
  const snapshot = await getDocs(collection(db,"mensajes"));
 
  snapshot.forEach((d)=>{
@@ -94,3 +101,4 @@ window.eliminar = async function(id){
 
  cargarMensajesAdmin();
 }
+
