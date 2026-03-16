@@ -106,6 +106,9 @@ container.appendChild(card);
 
 document.addEventListener("DOMContentLoaded",()=>{
 
+// Cargar mensajes públicos
+cargarMensajes();
+
 const loginBtn = document.getElementById("loginBtn");
 
 if(!loginBtn) return;
@@ -193,10 +196,3 @@ await deleteDoc(doc(db,"mensajes",id));
 cargarMensajesAdmin();
 
 }
-
-
-/* ================= CARGAR MENSAJES AL INICIAR ================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-  cargarMensajes();
-});
