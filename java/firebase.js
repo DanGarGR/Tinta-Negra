@@ -186,7 +186,6 @@ cargarMensajes();
 
 }
 
-
 window.eliminar = async function(id){
 
 await deleteDoc(doc(db,"mensajes",id));
@@ -194,6 +193,7 @@ await deleteDoc(doc(db,"mensajes",id));
 cargarMensajesAdmin();
 
 }
+
 
 /* ================= CARGAR MENSAJES AL INICIAR ================= */
 
