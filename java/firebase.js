@@ -194,3 +194,9 @@ await deleteDoc(doc(db,"mensajes",id));
 cargarMensajesAdmin();
 
 }
+
+/* ================= CARGAR MENSAJES AL INICIAR ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  cargarMensajes();
+});
