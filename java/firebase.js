@@ -68,42 +68,38 @@ communityForm.addEventListener("submit", async (e) => {
 
 /* ================= MOSTRAR MENSAJES APROBADOS ================= */
 
-async function cargarMensajes() {
+async function cargarMensajes(){
 
 const container = document.getElementById("messages");
 
 if(!container) return;
 
-container.innerHTML = "";
+container.innerHTML="";
 
-const q = query(
-  collection(db,"mensajes"),
-  where("aprobado","==",true),
-  orderBy("fecha","desc")
-);
-
-const snapshot = await getDocs(q);
+const snapshot = await getDocs(collection(db,"mensajes"));
 
 snapshot.forEach((d)=>{
 
-  const data = d.data();
+const data = d.data();
 
-  const card = document.createElement("div");
+if(data.aprobado === true){
 
-  card.classList.add("card");
+const card = document.createElement("div");
 
-  card.innerHTML = `
-    <h3>${data.nombre}</h3>
-    <p>${data.mensaje}</p>
-  `;
+card.classList.add("card");
 
-  container.appendChild(card);
+card.innerHTML = `
+<h3>${data.nombre}</h3>
+<p>${data.mensaje}</p>
+`;
+
+container.appendChild(card);
+
+}
 
 });
 
 }
-
-cargarMensajes();
 
 
 /* ================= LOGIN ADMIN ================= */
